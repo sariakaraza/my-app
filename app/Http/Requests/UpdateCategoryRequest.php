@@ -11,7 +11,8 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,24 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categoryId = $this->route('category') ? $this->route('category')->id : null;
         return [
             //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('categories', 'name')->ignore($categoryId),
+            ],
+            'description' => 'nullable|string',
+        ];
+
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Le nom de la catégorie est requis.',
         ];
     }
 }

@@ -11,7 +11,8 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // return false;
+        return true;
     }
 
     /**
@@ -23,6 +24,16 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required|string|max:255|unique:categories,name',
+            'description' => 'nullable|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Le nom de la catégorie est requis.',
+            'name.unique' => 'Ce nom de catégorie existe déjà.',
         ];
     }
 }
