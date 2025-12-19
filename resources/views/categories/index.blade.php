@@ -3,6 +3,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Catégories</h1>
+        <a href="{{ route('products.index') }}" class="btn btn-primary">Liste des produits</a>
         <a href="{{ route('categories.create') }}" class="btn btn-primary">Nouvelle catégorie</a>
     </div>
     <table class="table table-striped">
