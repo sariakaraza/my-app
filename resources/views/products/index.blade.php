@@ -12,7 +12,7 @@
             <option value="">Toutes les catégories</option>
             @foreach($categories as $cat)
                 <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
-                    {{ $cat->name }} ({{ $cat->products_count }})
+                    {{ $cat->name }} 
                 </option>
             @endforeach
         </select>
@@ -68,4 +68,15 @@
 </table>
 
 {{ $products->links() }}
+<div class="mt-4">
+    <h5>Nombre de produits par catégorie</h5>
+    <ul class="list-group">
+        @foreach($categories as $cat)
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ $cat->name }}
+                <span class="badge bg-primary rounded-pill">{{ $cat->products_count ?? 0 }}</span>
+            </li>
+        @endforeach
+    </ul>
+</div>
 @endsection
