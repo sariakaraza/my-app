@@ -4,7 +4,11 @@
 <div class="card">
     <div class="card-body">
         <h1 class="mb-3">{{ $category->name }}</h1>
-        <p class="mb-4">{{ $category->description }}</p>
+        <p class="mb-4"><b> Description </b> : {{ $category->description }}</p>
+        <p class="mb-4"><b> Slug </b> : {{ $category->slug }}</p>
+        <p class="mb-4"><b> Actif ? </b> : {{ $category->is_active ? 'Oui' : 'Non' }}</p>
+        <p class="mb-4"><b> Cree le </b> : {{ $category->created_at }}</p>
+        <p class="mb-4"><b> Modifié le </b> : {{ $category->updated_at }}</p>
 
         <a href="{{ route('categories.edit', $category) }}" class="btn btn-warning">Modifier</a>
 
