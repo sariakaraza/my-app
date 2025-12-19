@@ -43,7 +43,7 @@ class ProductController extends Controller
             $query->latest();
         }
 
-        $products = $query->paginate(10)->withQueryString();
+        $products = $query->paginate(5)->withQueryString();
 
         // categ avec nb de produits
         $categories = Category::withCount('products')->orderBy('name')->get();

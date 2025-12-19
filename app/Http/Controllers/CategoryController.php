@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('categories.create'); // crée cette vue plus tard ou adapte
+        return view('categories.create');
     }
 
     public function show(Category $category)
