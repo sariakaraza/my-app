@@ -8,13 +8,47 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    // public function index(): View
+    // {
+    //     $products = Product::with('category')->paginate(10);
+    //     return view('products.index', compact('products'));
+    // }
+
+
+    public function index(Request $request)
     {
-        $products = Product::with('category')->paginate(10);
-        return view('products.index', compact('products'));
+        $query = Product::with('category');
+
+        // filtre par categ
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // recherche par nom
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where('name', 'like', "%{$q}%");
+        }
+
+        // tri par prix
+        if ($request->get('sort') === 'price_asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($request->get('sort') === 'price_desc') {
+            $query->orderBy('price', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->paginate(10)->withQueryString();
+
+        // categ avec nb de produits
+        $categories = Category::withCount('products')->orderBy('name')->get();
+
+        return view('products.index', compact('products', 'categories'));
     }
 
     public function create(): View
